@@ -1,0 +1,40 @@
+<!DOCTYPE html><html><head><title>test</title>
+<meta name="viewport" content="width=device-width, user-scalable=no">
+<meta charset="utf-8"></head><body>
+
+<script>
+/*
+var channel = new MessageChannel();
+var port = channel.port1;
+
+port.onmessage = function(event) {
+    console.log("get response! " + event.data);
+};
+
+var worker = new Worker("worker.js");
+
+worker.postMessage("init", [channel.port2]);
+
+setTimeout(function() {
+    port.postMessage("dododo!");
+}, 2000);
+ */
+</script>
+
+<script src="../lib/WorkerMessage.js"></script>
+
+<script>
+var worker = new WorkerMessage("worker.js", function(event) {
+        var b = new Uint8Array(event.data.b);
+        console.log("get response! " + b[0] + b[1] + b[2]);
+    }, function(err) { });
+
+setTimeout(function() {
+    var a = new Uint8Array([9,8,7]);
+    worker.post({ a: a.buffer }, [a.buffer]);
+}, 2000);
+</script>
+
+
+</body></html>
+

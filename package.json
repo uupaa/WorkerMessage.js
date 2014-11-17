@@ -1,0 +1,60 @@
+{
+  "name":           "uupaa.workermessage.js",
+  "version":        "0.0.0",
+  "description":    "WebWorkers + MessageChannel functions",
+  "url":            "https://github.com/uupaa/WorkerMessage.js",
+  "keywords":       ["WebWorkers", "MessageChannel", "uupaa", "WebModule", "Unstable"],
+  "repository": {
+    "type":         "git",
+    "url":          "https://github.com/uupaa/WorkerMessage.js.git"
+  },
+  "scripts": {
+    "init":         "npm update; npm run build; npm run test-page",
+    "watch":        "node node_modules/uupaa.watch.js --verbose --action build",
+    "build":        "node node_modules/uupaa.minify.js --verbose --strict --keep --pretty",
+    "build-simple": "node node_modules/uupaa.minify.js --verbose --strict --keep --pretty --nowrap --simple",
+    "build-release":"node node_modules/uupaa.minify.js --verbose --strict --module",
+    "test":         "npm run test-node; npm run test-browser",
+    "test-page":    "node node_modules/uupaa.test.js/bin/TestPage.js --verbose",
+    "test-debug":   "NODE_ENV=production NODE_PATH=lib node --debug-brk --harmony test/index.node.js",
+    "test-node":    "NODE_ENV=production NODE_PATH=lib node --harmony test/index.node.js",
+    "test-browser": "open test/index.html",
+    "test-sim":     "node node_modules/uupaa.webmoduleutility.js --test-sim --verbose",
+    "server":       "python -m SimpleHTTPServer 8000 &",
+    "stop":         "killall -- python -m SimpleHTTPServer; exit 0",
+    "patch":        "node node_modules/uupaa.webmoduleutility.js --patched --verbose",
+    "hint":         "jshint lib/*.js",
+    "lint":         "npm run coverage",
+    "coverage":     "node node_modules/uupaa.plato.js; open lint/plato/index.html"
+  },
+  "x-build": {
+    "source":       ["lib/WorkerMessage.js"],
+    "output":       "release/WorkerMessage.min.js",
+    "target":       ["all"],
+    "label":        ["@dev"],
+    "module": {
+      "develop":    ["uupaa.valid.js"],
+      "release":    []
+    }
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "uupaa.nodemodule.js": "",
+    "uupaa.reflection.js": "",
+    "uupaa.console.js": "",
+    "uupaa.valid.js":   "",
+    "uupaa.help.js":    "",
+    "uupaa.task.js":    "",
+    "uupaa.test.js":    "",
+    "uupaa.watch.js":   "",
+    "uupaa.plato.js":   "",
+    "uupaa.minify.js":  "",
+    "uupaa.webmoduleutility.js": ""
+  },
+  "lib":            "./lib/",
+  "main":           "./index.js",
+  "author":         "uupaa",
+  "license":        "MIT",
+  "contributors":   []
+}
