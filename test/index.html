@@ -14,7 +14,7 @@ onmessage = function(event) {
     importScripts(MESSAGE.BASE_DIR + "../node_modules/uupaa.test.js/lib/Test.js");
     importScripts(MESSAGE.BASE_DIR + "../lib/WorkerMessage.js");
     importScripts(MESSAGE.BASE_DIR + "../release/WorkerMessage.min.js");
-    importScripts(MESSAGE.BASE_DIR + "./test.js?_=1416249743187");
+    importScripts(MESSAGE.BASE_DIR + "./test.js");
 
     self.postMessage({ error: self.errorMessage || "" });
 };
@@ -27,6 +27,7 @@ onmessage = function(event) {
 <script src="../node_modules/uupaa.task.js/lib/Task.js"></script>
 <script src="../node_modules/uupaa.test.js/lib/Test.js"></script>
 <script src="../lib/WorkerMessage.js"></script>
-<script src="./test.js?=_1416249743187"></script>
+<script src="../release/WorkerMessage.min.js"></script>
+<script src="./test.js"></script>
 
 </body></html>

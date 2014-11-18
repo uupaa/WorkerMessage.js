@@ -7,4 +7,5 @@ require("../node_modules/uupaa.task.js/lib/Task.js");
 require("../node_modules/uupaa.test.js/lib/Test.js");
 require("../node_modules/uupaa.webmoduleutility.js/lib/WebModuleUtility.js");
 require("../lib/WorkerMessage.js");
+require("../release/WorkerMessage.min.js");
 require("./test.js");

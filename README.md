@@ -22,16 +22,29 @@ WebWorkers + MessageChannel functions
 <script>
 
 var worker = new WorkerMessage("worker.js", function(event) {
-        var b = new Uint8Array(event.data.b);
-        console.log("get response! " + b[0] + b[1] + b[2]);
-    }, function(err) { });
 
-setTimeout(function() {
-    var a = new Uint8Array([9,8,7]);
-    worker.post({ a: a.buffer }, [a.buffer]);
-    //                           ~~~~~~~~~~
-    //                           transferable-objects
-}, 2000);
+        console.log(event.data); // "HELLO WORLD"
+        worker.close();
+
+    }, function(exitCode, errorMessage) {
+
+        switch (exitCode) {
+        case WorkerMessage.EXIT_CODE.OK: // 0
+            console.log("Safely closed.");
+            break;
+        case WorkerMessage.EXIT_CODE.ERROR: // 1
+            console.log("Terminates with an error from WorkerThread. " + errorMessage);
+            break;
+        case WorkerMessage.EXIT_CODE.FORCE: // 2
+            console.log("Forced termination by user.");
+            break;
+        case WorkerMessage.EXIT_CODE.TIMEOUT: // 3
+            console.log("Watchdog barked.");
+            break;
+        }
+    });
+
+worker.post("HELLO");
 
 </script>
 ```
@@ -44,13 +57,15 @@ setTimeout(function() {
 importScripts("lib/WorkerMessage.js");
 
 var worker = new WorkerMessage("", function(event) {
-        var a = new Uint8Array(event.data.a);
-        console.log("get request! " + a[0] + a[1] + a[2]);
 
-        var b = new Uint8Array([1,2,3]);
-        worker.post({ b: b.buffer }, [b.buffer]);
-        //                           ~~~~~~~~~~
-        //                           transferable-objects
+        worker.post(event.data + " WORLD");
+
+    }, function(ready, cancel) {
+        // .... destruction process...
+
+        ready();  // -> WORKER_CLOSE_READY
+      //cancel(); // -> WORKER_CLOSE_CANCEL
     });
-``
+
+```
 
