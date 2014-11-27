@@ -1,6 +1,6 @@
 {
   "name":           "uupaa.workermessage.js",
-  "version":        "0.0.4",
+  "version":        "0.0.5",
   "description":    "WebWorkers + MessageChannel functions",
   "url":            "https://github.com/uupaa/WorkerMessage.js",
   "keywords":       ["WebWorkers", "MessageChannel", "uupaa", "WebModule", "Unstable"],
