@@ -226,7 +226,7 @@ function testWorkerMessageCloseSelf(test, pass, miss) {
 
 function testWorkerMessagePostback(test, pass, miss) {
 
-    // [1] MainThread   | worker.post("HELLO", null, postback)
+    // [1] MainThread   | worker.post("HELLO", token, postback)
     // [2] WorkerThread | worker.post(event.data + " WORLD", null, token) に加工して返す
     // [3] MainThread   | "HELLO WORLD" をポストバックで受け取る
     // [4] MainThread   | worker.close()
@@ -256,9 +256,14 @@ function testWorkerMessagePostback(test, pass, miss) {
             test.done(miss());
         });
 
-    worker.post("HELLO", null, "", function(message, token, event) { // [1]
+    var token = 123; // random value
+
+    worker.post("HELLO", null, token, function(message, postbacktoken, event) { // [1]
         console.log(message); // "HELLO WORLD"
-        valid = message === "HELLO WORLD"; // [3]
+        if (message === "HELLO WORLD" && // [3]
+            token === postbacktoken) {
+            valid = true;
+        }
         worker.close(); // [4]
     });
 }
@@ -273,7 +278,7 @@ function testWorkerMessagePostbackWithToken(test, pass, miss) {
     // [6] MainThread   | handleClose(EXIT_CODE_OK) が呼ばれる事を確認する
 
     var valid = false;
-    var userToken = "1234";
+    var userToken = 1234;
 
     var worker = new WorkerMessage("worker8.js", function(message, token, event) {
 /*
